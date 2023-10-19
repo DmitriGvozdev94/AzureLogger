@@ -1,0 +1,25 @@
+{
+    "name": "gvod/azure_logger",
+    "description": "Custom logger drive for laravel",
+    "type": "library",
+    "license": "GNU",
+    "autoload": {
+        "psr-4": {
+            "Gvod\\AzureLogger\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Dmitri Gvozdev",
+            "email": "dmitrigvozdev94@gmail.com"
+        }
+    ],
+    "require": {},
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Gvod\\AzureLogger\\AzureLogAnalyticsLogger"
+            ]
+        }
+    }
+}
