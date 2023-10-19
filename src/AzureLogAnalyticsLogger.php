@@ -2,17 +2,27 @@
 
 namespace Gvod\AzureLogger;
 
+use Illuminate\Support\ServiceProvider;
 use Monolog\Logger;
 
-class AzureLogAnalyticsLogger
+class AzureLogAnalyticsLoggerServiceProvider extends ServiceProvider
 {
-    public function __invoke(array $config)
+    public function register()
     {
-        $level = Logger::toMonologLevel($config['level'] ?? 'debug');
-        $logLevel = $config['logLevel'] ?? 'MyCustomLog';
+        $this->app->singleton('azure.logger', function ($app) {
+            $config = $app['config']->get('logging.channels.azure');
 
-        return new Logger('azure', [
-            new AzureLogAnalyticsHandler($config['workspaceId'], $config['sharedKey'], $level, $logLevel),
-        ]);
+            $level = Logger::toMonologLevel($config['level'] ?? 'debug');
+            $logLevel = $config['logLevel'] ?? 'MyCustomLog';
+
+            return new Logger('azure', [
+                new AzureLogAnalyticsHandler(
+                    $config['workspaceId'], 
+                    $config['sharedKey'], 
+                    $level, 
+                    $logLevel
+                ),
+            ]);
+        });
     }
 }
