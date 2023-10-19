@@ -18,7 +18,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Gvod\\AzureLogger\\AzureLogAnalyticsLogger"
+                "Gvod\\AzureLogger\\AzureLogAnalyticsLoggerServiceProvider"
             ]
         }
     }
