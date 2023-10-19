@@ -1,5 +1,5 @@
 {
-    "name": "gvod/azure_logger",
+    "name": "gvod/azurelogger",
     "description": "Custom logger drive for laravel",
     "type": "library",
     "license": "GNU",
