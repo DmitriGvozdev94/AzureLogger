@@ -10,12 +10,14 @@ class AzureLogAnalyticsHandler extends AbstractProcessingHandler
 {
     protected $workspaceId;
     protected $sharedKey;
+    protected $logType;
 
-    public function __construct($workspaceId, $sharedKey, $level = Logger::DEBUG, $bubble = true, $logType = "MyCustomLog")
+    public function __construct($workspaceId, $sharedKey, $logType = "MyCustomLog", $level = Logger::DEBUG, $bubble = true)
     {
         parent::__construct($level, $bubble);
         $this->workspaceId = $workspaceId;
         $this->sharedKey = $sharedKey;
+        $this->logType = $logType;
     }
 
     protected function write(array $record): void
@@ -36,8 +38,6 @@ class AzureLogAnalyticsHandler extends AbstractProcessingHandler
 
         $authHeader = "SharedKey " . $this->workspaceId . ":" . $signature;
 
-        error_log('TEST  ' . $authHeader);
-
         $ch = curl_init('https://' . $this->workspaceId . '.ods.opinsights.azure.com/api/logs?api-version=2016-04-01');
         
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
@@ -45,13 +45,18 @@ class AzureLogAnalyticsHandler extends AbstractProcessingHandler
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Authorization: ' . $authHeader,
-            'Log-Type: ' . $this->$logType,
+            'Log-Type: ' . $this->logType,
             'x-ms-date: ' . $date,
             'time-generated-field: TimeGenerated',
             'Content-Type: application/json',
         ]);
 
         $result = curl_exec($ch);
+
+        error_log('AzureLogAnalyticsHandler ' . $this->logType);
+        error_log('AzureLogAnalyticsHandler ' . $this->workspaceId);
+        error_log('AzureLogAnalyticsHandler ' . $this->sharedKey);
+
         if (curl_errno($ch)) {
             error_log('AzureLogAnalyticsHandler CURL error: ' . curl_error($ch));
         } else if ($result !== 'Accepted') {

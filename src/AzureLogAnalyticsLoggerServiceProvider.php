@@ -13,14 +13,14 @@ class AzureLogAnalyticsLoggerServiceProvider extends ServiceProvider
             $config = $app['config']->get('logging.channels.azure');
 
             $level = Logger::toMonologLevel($config['level'] ?? 'debug');
-            $logLevel = $config['logLevel'] ?? 'MyCustomLog';
+            $logType = $config['logType'] ?? 'MyCustomLog';
 
             return new Logger('azure', [
                 new AzureLogAnalyticsHandler(
                     $config['workspaceId'], 
                     $config['sharedKey'], 
                     $level, 
-                    $logLevel
+                    $logType
                 ),
             ]);
         });
