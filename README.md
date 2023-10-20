@@ -25,14 +25,18 @@ AZURE_SHARED_KEY=workspace_key_from_azure
 ## Add to config/logging.php
 
 ```
-'azure' => [
-    'driver' => 'custom',
-    'via' => Gvod\AzureLogger\AzureLogAnalyticsLogger::class,
-    'level' => 'debug',
-    'workspaceId' => env('AZURE_WORKSPACE_ID'),
-    'sharedKey' => env('AZURE_SHARED_KEY'),
-    'logType' => 'MyCustomLog',
-],
+'channels' => [
+    ...
+    'azure' => [
+        'driver' => 'custom',
+        'via' => Gvod\AzureLogger\AzureLogAnalyticsLogger::class,
+        'level' => 'debug',
+        'workspaceId' => env('AZURE_WORKSPACE_ID'),
+        'sharedKey' => env('AZURE_SHARED_KEY'),
+        'logType' => 'MyCustomLog',
+    ],
+    ...
+]
 ```
 
 ## Use somewhere
