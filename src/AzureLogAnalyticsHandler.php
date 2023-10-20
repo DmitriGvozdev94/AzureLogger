@@ -53,10 +53,6 @@ class AzureLogAnalyticsHandler extends AbstractProcessingHandler
 
         $result = curl_exec($ch);
 
-        error_log('AzureLogAnalyticsHandler ' . $this->logType);
-        error_log('AzureLogAnalyticsHandler ' . $this->workspaceId);
-        error_log('AzureLogAnalyticsHandler ' . $this->sharedKey);
-
         if (curl_errno($ch)) {
             error_log('AzureLogAnalyticsHandler CURL error: ' . curl_error($ch));
         } else if ($result !== 'Accepted') {
