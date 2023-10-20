@@ -55,7 +55,7 @@ class AzureLogAnalyticsHandler extends AbstractProcessingHandler
 
         if (curl_errno($ch)) {
             error_log('AzureLogAnalyticsHandler CURL error: ' . curl_error($ch));
-        } else if ($result !== 'Accepted') {
+        } else if ($result !== '') {
             // Log Analytics specific error output
             error_log('AzureLogAnalyticsHandler error: ' . $result);
         }
